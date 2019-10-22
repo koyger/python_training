@@ -3,9 +3,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
-
 from base_actions import *
-from base_actions import logout
 from group import Group
 
 
