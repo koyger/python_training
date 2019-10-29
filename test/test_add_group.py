@@ -11,10 +11,10 @@ def app(request):
 
 def test_add_group(app):
     app.session.login(username="admin", password="secret")
-    app.create_group(Group(name="New group", header="11", footer="22"))
+    app.group.create(Group(name="New group", header="11", footer="22"))
     app.session.logout()
 
 def test_add_group_with_empty_fields(app):
     app.session.login(username="admin", password="secret")
-    app.create_group(Group(name="", header="", footer=""))
+    app.group.create(Group(name="", header="", footer=""))
     app.session.logout()
