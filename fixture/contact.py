@@ -38,3 +38,10 @@ class ContactHelper:
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(user.address)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+
+    def delete_first(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        wd.find_element_by_link_text("home").click()
