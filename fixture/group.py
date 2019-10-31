@@ -25,7 +25,7 @@ class GroupHelper:
         # submit group creation
         wd.find_element_by_name("submit").click()
 
-    def modify(self, group):
+    def modify_first(self, group):
         wd = self.app.wd
         self.open_groups_page()
         # init first group modification
