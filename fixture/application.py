@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from selenium import webdriver
 from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
@@ -14,11 +15,11 @@ class Application:
 
     def is_valid(self):
         try:
+            # Проверка одновременно возвращает на главную старницу
             self.wd.get("http://localhost/addressbook/")
             return True
         except:
             return False
-
 
     def open_home_page(self):
         wd = self.wd
