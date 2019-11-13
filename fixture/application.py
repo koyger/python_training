@@ -4,6 +4,7 @@ from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
 from fixture.session import SessionHelper
 
+
 class Application:
 
     def __init__(self):
@@ -15,15 +16,13 @@ class Application:
 
     def is_valid(self):
         try:
-            # Проверка одновременно возвращает на главную старницу
-            self.wd.get("http://localhost/addressbook/")
+            self.wd.current_url
             return True
         except:
             return False
 
     def open_home_page(self):
-        wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        self.wd.get("http://localhost/addressbook/")
 
     def destroy(self):
         self.wd.quit()

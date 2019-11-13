@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 from fixture.application import *
-
 fixture = None
+
 
 @pytest.fixture
 def app(request):
