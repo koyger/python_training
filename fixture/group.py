@@ -56,9 +56,9 @@ class GroupHelper:
         self.open_groups_page()
 
     def count(self):
+        # quantity of groups
         wd = self.app.wd
         self.open_groups_page()
-        # quantity of groups
         return len(wd.find_elements_by_name("selected[]"))
 
 

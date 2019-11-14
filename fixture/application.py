@@ -21,7 +21,10 @@ class Application:
             return False
 
     def open_home_page(self):
-        self.wd.get("http://localhost/addressbook/")
+        wd = self.wd
+        if not (wd.current_url.endswith("/index.php") and len(wd.find_elements_by_xpath(
+                "//a[contains(text(),'Last name')]")) > 0):
+            self.wd.get("http://localhost/addressbook/index.php")
 
     def destroy(self):
         self.wd.quit()
