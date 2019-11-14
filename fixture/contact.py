@@ -16,19 +16,28 @@ class ContactHelper:
 
     def create(self, user):
         wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
         wd.find_element_by_link_text("add new").click()
         self.fill_contact(user)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
     def modify_first(self, user):
         wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact(user)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
 
     def delete_first(self):
         wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         wd.find_element_by_link_text("home").click()
+
+    def count(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
+        # quantity of contacts
+        return len(wd.find_elements_by_xpath("//img[@alt='Edit']"))
