@@ -12,6 +12,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        print("APP INITIALIZED")
 
     def is_valid(self):
         try:
@@ -22,7 +23,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        if not (wd.current_url.endswith("/index.php") and len(wd.find_elements_by_xpath(
+        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
                 "//a[contains(text(),'Last name')]")) > 0):
             self.wd.get("http://localhost/addressbook/index.php")
 
