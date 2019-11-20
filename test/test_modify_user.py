@@ -10,12 +10,6 @@ def test_modify_first_user(app):
     app.contact.modify_first(contact_to_modify)
     new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts) == len(new_contacts)
-    print("BEFORE insert contact_to_modify")
-    print(old_contacts)
     # вписываем модифицированный контакт в первый элемент списка old_contacts
     old_contacts[0] = contact_to_modify
-    print("AFTER insert contact_to_modify")
-    print(old_contacts)
-    print("NEW CONTACTS LIST")
-    print(new_contacts)
     assert sorted(old_contacts, key=User.id_or_max) == sorted(new_contacts, key=User.id_or_max)
