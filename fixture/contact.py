@@ -7,15 +7,10 @@ class ContactHelper:
         self.app = app
 
     def fill_contact(self, contact):
-        wd = self.app.wd
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact.company_name)
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
+        self.app.change_field_value("firstname", contact.first_name)
+        self.app.change_field_value("lastname", contact.last_name)
+        self.app.change_field_value("company", contact.company_name)
+        self.app.change_field_value("address", contact.address)
 
     def create(self, user):
         wd = self.app.wd
@@ -37,7 +32,6 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
-        # wd.find_element_by_link_text("home").click()
 
     def count(self):
         # quantity of contacts

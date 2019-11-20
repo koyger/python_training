@@ -16,6 +16,7 @@ class Application:
 
     def is_valid(self):
         try:
+            # it is a check that session is alive
             self.wd.current_url
             return True
         except:
@@ -29,3 +30,9 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+    def change_field_value(app, field_name, text):
+        wd = app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
