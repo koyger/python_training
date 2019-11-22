@@ -28,10 +28,16 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contacts_cache = None
 
-    def delete_first(self):
+    def select_user_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("entry")[index].find_element_by_name("selected[]").click()
+
+    def delete_user_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_user_by_index(index)
+        # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.contacts_cache = None
