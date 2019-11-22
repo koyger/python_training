@@ -28,15 +28,24 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contacts_cache = None
 
-    def select_user_by_index(self, index):
+    def modify_user_by_index(self, user, index):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_elements_by_name("entry")[index].find_element_by_name("selected[]").click()
+        self.user_line_selected(index).find_element_by_name("//img[@alt='Edit']").click()
+        # wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.fill_contact(user)
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.contacts_cache = None
+
+    def user_line_selected(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return wd.find_elements_by_name("entry")[index]
 
     def delete_user_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_user_by_index(index)
+        self.user_line_selected(index).find_element_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
