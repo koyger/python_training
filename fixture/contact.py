@@ -1,4 +1,5 @@
 from model.user import User
+import time
 
 
 class ContactHelper:
@@ -20,18 +21,10 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.contacts_cache = None
 
-    def modify_first(self, user):
-        wd = self.app.wd
-        self.app.open_home_page()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        self.fill_contact(user)
-        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
-        self.contacts_cache = None
-
     def modify_user_by_index(self, user, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.user_line_selected(index).find_element_by_name("//img[@alt='Edit']").click()
+        self.user_line_selected(index).find_element_by_xpath("//img[@alt='Edit']").click()
         # wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact(user)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()

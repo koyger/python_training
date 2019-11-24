@@ -13,5 +13,3 @@ def test_del_some_user(app):
     new_contacts = app.contact.get_contacts_list()
     old_contacts[index:index+1] = []  # убрали удаленный элемент из списка
     assert old_contacts == new_contacts
-
-
