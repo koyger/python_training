@@ -24,8 +24,7 @@ class ContactHelper:
     def modify_user_by_index(self, user, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.user_line_selected(index).find_element_by_xpath("//img[@alt='Edit']").click()
-        # wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.user_line_selected(index).find_element_by_xpath(".//img[@alt='Edit']").click()
         self.fill_contact(user)
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contacts_cache = None
