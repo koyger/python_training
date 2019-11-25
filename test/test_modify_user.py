@@ -9,8 +9,8 @@ def test_modify_first_user(app):
     contact_to_modify = User(first_name="MODIFIED first name", last_name="X MODIFIED last name", company_name="MODIFIED center2m", address="MODIFIED street, 21")
     old_contacts = app.contact.get_contacts_list()
     index = 0
+    contact_to_modify.id = old_contacts[index].id
     app.contact.modify_user_by_index(contact_to_modify, index)
-    new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contacts_list()
     # вписываем модифицированный контакт в выбранный элемент списка old_contacts
@@ -24,8 +24,8 @@ def test_modify_some_user(app):
     contact_to_modify = User(first_name="MODIFIED first name", last_name="X MODIFIED last name", company_name="MODIFIED center2m", address="MODIFIED street, 21")
     old_contacts = app.contact.get_contacts_list()
     index = randrange(len(old_contacts))
+    contact_to_modify.id = old_contacts[index].id
     app.contact.modify_user_by_index(contact_to_modify, index)
-    new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contacts_list()
     # вписываем модифицированный контакт в выбранный элемент списка old_contacts
