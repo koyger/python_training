@@ -1,23 +1,27 @@
 from sys import maxsize
 
 
-class User:
+class Contact:
 
-    def __init__(self, first_name=None, last_name=None, company_name=None,
-                 address=None, id=None):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.company_name = company_name
+    def __init__(self, firstname=None, lastname=None, companyname=None,
+                 address=None, homephone=None, mobilephone=None, workphone=None, secondaryphone=None, id=None):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.companyname = companyname
         self.address = address
+        self.homephone = homephone
+        self.mobilephone = mobilephone
+        self.workphone = workphone
+        self.secondaryphone = secondaryphone
         self.id = id
 
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.last_name, self.first_name)
+        return "%s:%s:%s" % (self.id, self.lastname, self.firstname)
 
     def __eq__(self, other):
         return (self.id == other.id or self.id is None or other.id is None) and \
-               self.last_name == other.last_name and \
-               self.first_name == other.first_name
+               self.lastname == other.lastname and \
+               self.firstname == other.firstname
 
     def id_or_max(cont):
         if cont.id:
