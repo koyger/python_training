@@ -1,6 +1,7 @@
 from model.user import Contact
 import re
 
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -11,6 +12,9 @@ class ContactHelper:
         self.app.change_field_value("lastname", contact.lastname)
         self.app.change_field_value("company", contact.companyname)
         self.app.change_field_value("address", contact.address)
+        self.app.change_field_value("home", contact.homephone)
+        self.app.change_field_value("mobile", contact.mobilephone)
+        self.app.change_field_value("work", contact.workphone)
 
     def create(self, user):
         wd = self.app.wd
