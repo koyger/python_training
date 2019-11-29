@@ -1,5 +1,5 @@
 from model.user import Contact
-
+import re
 
 class ContactHelper:
 
@@ -20,7 +20,7 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.contacts_cache = None
 
-    def open_user_to_edit_by_index(self, user, index):
+    def modify_user_by_index(self, user, index):
         wd = self.app.wd
         self.app.open_home_page()
         self.user_line_selected(index).find_element_by_xpath(".//img[@alt='Edit']").click()
@@ -28,7 +28,7 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contacts_cache = None
 
-    def open_user_view_by_index(self, user, index):
+    def open_user_view_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
         self.user_line_selected(index).find_element_by_xpath(".//img[@alt='Details']").click()
@@ -65,15 +65,14 @@ class ContactHelper:
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 lastname = cells[1].text
                 firstname = cells[2].text
-                all_phones = cells[5].text.splitlines()
-                # print(all_phones[0]+" "+all_phones[1]+" "+all_phones[2])
-                scanned_contact = Contact(firstname=firstname, lastname=lastname, id=id, homephone=all_phones[0], mobilephone=all_phones[1], workphone=all_phones[2])
+                all_phones = cells[5].text
+                scanned_contact = Contact(firstname=firstname, lastname=lastname, id=id, all_phones_from_homepage=all_phones)
                 self.contacts_cache.append(scanned_contact)
         return list(self.contacts_cache)
 
-    def get_contact_info_from_edit_page(self, i_of_u):
+    def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
-        self.user_line_selected(i_of_u).find_element_by_xpath(".//img[@alt='Edit']").click()
+        self.user_line_selected(index).find_element_by_xpath(".//img[@alt='Edit']").click()
         firstname = wd.find_element_by_name("firstname").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
@@ -83,5 +82,19 @@ class ContactHelper:
         return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone)
 
-
+    def get_phones_info_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_user_view_by_index(index)
+        full_text = wd.find_element_by_id("content").text
+        homephone = ""
+        if re.search("H: (.*)", full_text) is not None:
+            homephone = re.search("H: (.*)", full_text).group(1)
+        workphone = ""
+        if re.search("W: (.*)", full_text) is not None:
+            workphone = re.search("W: (.*)", full_text).group(1)
+        mobilephone = ""
+        if re.search("M: (.*)", full_text) is not None:
+            mobilephone = re.search("M: (.*)", full_text).group(1)
+        return Contact(homephone=homephone, mobilephone=mobilephone,
+                       workphone=workphone)
 
