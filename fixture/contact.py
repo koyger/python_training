@@ -1,3 +1,5 @@
+import time
+
 from model.user import Contact
 import re
 
@@ -49,9 +51,13 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         self.user_line_selected(index).find_element_by_name("selected[]").click()
+        # sleeps are added to improve stability
+        time.sleep(1)
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
+        time.sleep(1)
         wd.switch_to.alert.accept()
+        time.sleep(1)
         self.contacts_cache = None
 
     def count(self):
