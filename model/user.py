@@ -25,12 +25,22 @@ class Contact:
         return "%s:%s:%s" % (self.id, self.lastname, self.firstname)
 
     def __eq__(self, other):
+        # cleaning from spaces is needed before comparison
+        s_lastname = self.wo_spaces(self.lastname)
+        s_firstname = self.wo_spaces(self.firstname)
+        o_lastname = self.wo_spaces(other.lastname)
+        o_firstname = self.wo_spaces(other.firstname)
         return (self.id == other.id or self.id is None or other.id is None) and \
-               self.lastname == other.lastname and \
-               self.firstname == other.firstname
+               s_lastname == o_lastname and \
+               s_firstname == o_firstname
 
     def id_or_max(cont):
         if cont.id:
             return int(cont.id)
         else:
             return maxsize
+
+    @staticmethod
+    def wo_spaces(s):
+        x = s.split()
+        return "".join(x)

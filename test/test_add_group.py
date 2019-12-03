@@ -2,7 +2,7 @@
 import pytest
 import random
 import string
-from model.group import *
+from model.group import Group
 
 
 def random_string(prefix, maxlen):
