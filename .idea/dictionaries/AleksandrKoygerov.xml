@@ -3,6 +3,7 @@
     <words>
       <w>maxlen</w>
       <w>testdata</w>
+      <w>webdriver</w>
     </words>
   </dictionary>
 </component>
