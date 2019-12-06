@@ -28,5 +28,5 @@ def stop(request):
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="firefox")
+    parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--baseUrl", action="store", default="http://localhost/addressbook/index.php")
