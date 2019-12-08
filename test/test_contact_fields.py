@@ -8,9 +8,9 @@ def test_contact_fields_on_homepage(app):
     index = random.randrange(len(contact_list))
     homepage_contact = contact_list[index]
     edit_page_contact = app.contact.get_contact_info_from_edit_page(index)
-    assert homepage_contact.firstname == edit_page_contact.firstname
-    assert homepage_contact.lastname == edit_page_contact.lastname
-    assert homepage_contact.address == edit_page_contact.address
+    assert clear(homepage_contact.firstname) == clear(edit_page_contact.firstname)
+    assert clear(homepage_contact.lastname) == clear(edit_page_contact.lastname)
+    assert clear(homepage_contact.address) == clear(edit_page_contact.address)
     assert homepage_contact.all_phones_from_homepage == merge_phones_like_on_homepage(edit_page_contact)
     assert homepage_contact.all_emails_from_homepage == merge_emails_like_on_homepage(edit_page_contact)
 
