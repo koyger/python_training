@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
+import jsonpickle
 import os
 import random
 import string
@@ -36,4 +36,5 @@ testdata = [Group(name="", header="", footer="")] + [
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
 with open(file_path, "w") as f_out:
-    f_out.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+    jsonpickle.set_encoder_options("json", indent=2)
+    f_out.write(jsonpickle.encode(testdata))
