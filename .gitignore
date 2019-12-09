@@ -102,3 +102,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/.idea/python_training.iml
