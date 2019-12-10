@@ -1,5 +1,6 @@
 import pymysql.cursors
 from model.group import Group
+from model.user import Contact
 
 
 class DbFixture:
@@ -21,6 +22,18 @@ class DbFixture:
         finally:
             cursor.close()
         return gr_list
+
+    def get_contact_list(self):
+        us_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, firstname, lastname from addressbook where deprecated='0000-00-00 00:00:00'")
+            for row in cursor.fetchall():
+                (us_id, firstname, lastname) = row
+                us_list.append(Contact(id=str(us_id), firstname=firstname, lastname=lastname))
+        finally:
+            cursor.close()
+        return us_list
 
     def destroy(self):
         self.connection.close()
