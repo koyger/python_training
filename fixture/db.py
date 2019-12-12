@@ -23,6 +23,18 @@ class DbFixture:
             cursor.close()
         return gr_list
 
+    def modify_group_by_id(self, id, group_data):
+        gr_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id, group_name, group_header, group_footer from group_list")
+            for row in cursor.fetchall():
+                (gr_id, name, header, footer) = row
+                gr_list.append(Group(id=str(gr_id), name=name, header=header, footer=footer))
+        finally:
+            cursor.close()
+        return gr_list
+
     def get_contact_list(self):
         us_list = []
         cursor = self.connection.cursor()

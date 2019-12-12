@@ -6,3 +6,5 @@ testdata = [
     Group(name="Group name 2", header="Header 2", footer="Footer 2")
 ]
 
+modgroupdata = [Group(name="12 DEC group", header="MODIFIED 12", footer="MODIFIED 12"),
+                Group(name="12 DEC NAME only group")]
