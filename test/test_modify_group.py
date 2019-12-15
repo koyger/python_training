@@ -4,7 +4,7 @@ from model.group import Group
 from data.groups import modgroupdata
 
 
-def test_modify_groups(app, db):
+def test_modify_groups(app, db, check_ui):
     for mod_gr in modgroupdata:
         if len(db.get_group_list()) == 0:
             app.group.create(Group(name="FIRST group", header="11 first group", footer="22 first group"))
@@ -18,6 +18,8 @@ def test_modify_groups(app, db):
         group.header = group_to_modify.header
         group.footer = group_to_modify.footer
         assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+        if check_ui:
+            assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 
 # I LEAVE NON-DB UI FUNCTION FOR EDUCATIONAL PURPOSES

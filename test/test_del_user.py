@@ -3,7 +3,7 @@ import random
 from model.user import Contact
 
 
-def test_del_some_user(app, db):
+def test_del_some_user(app, db, check_ui):
     # we remove 4 users to compensate 4 created
     for i in range(4):
         if app.contact.count() == 0:
@@ -12,6 +12,7 @@ def test_del_some_user(app, db):
         user = random.choice(old_contacts)
         db_id = user.id
         index = None
+        # Выясняем, какой ui index у выбранного контакта
         for c in range(len(old_contacts)):
             ui_id = app.contact.find_user_id_by_index(c)
             if ui_id == db_id:
@@ -20,6 +21,9 @@ def test_del_some_user(app, db):
         new_contacts = db.get_contact_list()
         old_contacts.remove(user)
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+        if check_ui:
+            assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contacts_list_from_table(),
+                                                                         key=Contact.id_or_max)
 
 
 # I LEAVE OLD TEST FOR EDUCATIONAL PURPOSES

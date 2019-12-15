@@ -4,7 +4,7 @@ from model.user import Contact
 from data.contacts import moduserdata
 
 
-def test_modify_some_user(app, db):
+def test_modify_some_user(app, db, check_ui):
     for mod_us in moduserdata:
         if app.contact.count() == 0:
             app.contact.create(Contact(firstname="FIRST User first name", lastname="FIRST User last name",
@@ -22,6 +22,9 @@ def test_modify_some_user(app, db):
         user.firstname = mod_us.firstname
         user.lastname = mod_us.lastname
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+        if check_ui:
+            assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contacts_list_from_table(),
+                                                                         key=Contact.id_or_max)
 
 
 # I LEAVE THIS TEST FOR EDUCATIONAL PURPOSES
