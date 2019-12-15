@@ -44,6 +44,7 @@ def db(request):
 def check_ui(request):
     return request.config.getoption("--check_ui")
 
+
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():

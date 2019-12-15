@@ -119,3 +119,5 @@ class ContactHelper:
         return Contact(homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone)
 
+    def find_user_id_by_index(self, index):
+        return self.user_line_selected(index).find_element_by_tag_name("input").get_attribute("value")
