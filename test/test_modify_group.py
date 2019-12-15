@@ -13,7 +13,6 @@ def test_modify_groups(app, db):
         group = random.choice(old_groups)
         app.group.modify_group_by_id(group_to_modify, group.id)
         new_groups = db.get_group_list()
-        assert len(old_groups) == len(new_groups)
         # вписываем модифицированную группу в выбранный элемент списка old_group
         group.name = group_to_modify.name
         group.header = group_to_modify.header
