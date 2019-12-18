@@ -19,17 +19,13 @@ def test_all_contact_fields_on_homepage_vs_db(app, db):
     ui_contact_list = app.contact.get_contacts_list_from_table()
     db_contact_list = db.get_contact_list()
     contacts_count = len(ui_contact_list)
-    # index = random.randrange(contacts_count)
     for index in range(contacts_count):
         ui_contact = ui_contact_list[index]
-        print("UI_CONTACT = "+str(ui_contact))
         db_id = int(app.contact.find_user_id_by_index(index))
-        print("DB_ID = "+str(db_id))
         for k in range(contacts_count):
             k_contact = db_contact_list[k]
             if str(k_contact.id) == str(db_id):
                 db_contact = k_contact
-                print("DB_CONTACT = "+str(db_contact))
         assert clear(ui_contact.firstname) == clear(db_contact.firstname)
         assert clear(ui_contact.lastname) == clear(db_contact.lastname)
         assert clear(ui_contact.address) == clear(db_contact.address)
