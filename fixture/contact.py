@@ -1,5 +1,7 @@
 import time
 
+from selenium.webdriver.support.select import Select
+
 from model.user import Contact
 import re
 
@@ -121,3 +123,10 @@ class ContactHelper:
 
     def find_user_id_by_index(self, index):
         return self.user_line_selected(index).find_element_by_tag_name("input").get_attribute("value")
+
+    def add_to_group(self, index, gr_id):
+        wd = self.app.wd
+        self.app.contact.user_line_selected(index).find_element_by_name("selected[]").click()
+        Select(wd.find_element_by_name("to_group")).select_by_value(str(gr_id))
+        time.sleep(1)
+        wd.find_element_by_name("add").click()
