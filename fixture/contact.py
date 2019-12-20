@@ -1,7 +1,7 @@
+# -*- coding: utf-8 -*-
 import time
-
+from random import randrange
 from selenium.webdriver.support.select import Select
-
 from model.user import Contact
 import re
 
@@ -46,7 +46,7 @@ class ContactHelper:
 
     def user_line_selected(self, index):
         wd = self.app.wd
-        self.app.open_home_page()
+        # self.app.open_home_page()
         return wd.find_elements_by_name("entry")[index]
 
     def delete_user_by_index(self, index):
@@ -73,7 +73,6 @@ class ContactHelper:
     def get_contacts_list_from_table(self):
         if self.contacts_cache is None:
             wd = self.app.wd
-            self.app.open_home_page()
             self.contacts_cache = []
             for row in wd.find_elements_by_name("entry"):
                 cells = row.find_elements_by_tag_name("td")
@@ -130,3 +129,13 @@ class ContactHelper:
         Select(wd.find_element_by_name("to_group")).select_by_value(str(gr_id))
         time.sleep(1)
         wd.find_element_by_name("add").click()
+
+    def remove_user_from_group(self, gr_id, index):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/?group="+gr_id)
+        time.sleep(1)
+        db_id = self.find_user_id_by_index(index)
+        wd.find_elements_by_name("entry")[index].find_element_by_name("selected[]").click()
+        time.sleep(1)
+        wd.find_element_by_name("remove").click()
+        return db_id

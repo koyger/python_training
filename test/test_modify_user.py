@@ -6,6 +6,7 @@ from data.contacts import moduserdata
 
 def test_modify_some_user(app, db, check_ui):
     for mod_us in moduserdata:
+        app.open_home_page()
         if len(db.get_contact_list()) == 0:
             app.contact.create(Contact(firstname="FIRST User first name", lastname="FIRST User last name",
                                        companyname="FIRST user center2m", address="FIRST User street, 21", id=None))
