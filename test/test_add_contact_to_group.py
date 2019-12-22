@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
+import time
+
 from model.group import Group
 from model.user import Contact
 
@@ -37,15 +39,22 @@ def test_add_contact_to_group(app, orm_db):
         print("GROUP CHOSEN FOR ADDING NAME= " + group.name)
         print("GROUP CHOSEN FOR ADDING ID = " + group.id)
         group_db_id = group.id
-        cont_list = orm_db.get_contacts_not_in_group(Group(id=group_db_id))
+        cont_of_gr_list = orm_db.get_contacts_not_in_group(Group(id=group_db_id))
         # выбираем случайного пользователя
-        user_to_add = random.choice(cont_list)
+        user_to_add = random.choice(cont_of_gr_list)
         # let's specify the index of chosen user
         index = None
-        for c in range(len(cont_list)):
+        app.wd.get(app.base_url + "group.php")
+        time.sleep(1)
+        app.open_home_page()
+        time.sleep(1)
+        for c in range(len(cont_of_gr_list)):
             ui_id = app.contact.find_user_id_by_index(c)
+            print("Пробуем юзер айди = " + str(ui_id) +" c user_to_add.id = "+ str(user_to_add.id) + " по индексу " + str(c))
             if ui_id == user_to_add.id:
                 index = c
+                print("Подобран индекс = " + str(ui_id) + " для юзера с индексом " + str(index))
+
         print("попытка КОНТАКТ = " + str(index) + " ДОБАВЛЕН В ГРУППУ " + str(group_db_id))
         app.contact.add_to_group(index, group_db_id)
         print("!УСПЕХ! КОНТАКТ = " + str(index) + " ДОБАВЛЕН В ГРУППУ " + str(group_db_id))
