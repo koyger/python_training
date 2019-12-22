@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 from selenium import webdriver
 from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
@@ -45,3 +47,6 @@ class Application:
         if text is not None:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
+
+    def clear(self, some_text):
+        return re.sub("[() -]", "", some_text)
