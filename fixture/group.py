@@ -1,6 +1,5 @@
+# -*- coding: utf-8 -*-
 from model.group import Group
-
-
 class GroupHelper:
 
     def __init__(self, app):
@@ -110,12 +109,8 @@ class GroupHelper:
 
     def groups_without_empty_names(self, groups):
         # Уберем из списка группы, куда уже нельзя добавить юзеров.Также группы с пустыми именами, из-за глюка с ними
-        for gr in range(len(groups)):
-            len_before = len(groups)
-            print("GR = "+str(gr))
-            print("len_before-gr-1 = "+str(len_before-gr-1))
-            print("GROUP NAME CHECKED = " + groups[len_before-gr-1].name)
+        len_before = len(groups)
+        for gr in range(len_before):
             if self.app.clear(groups[len_before-gr-1].name) == "":
-                print("GROUP NAME CLEARED = " + groups[len_before-gr-1].name)
                 groups.pop(len_before-gr-1)
         return groups
