@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import random
 import time
-
 from model.group import Group
 from model.user import Contact
 
@@ -10,18 +9,10 @@ def test_add_contact_to_group(app, orm_db):
     # создаем несколько связей
     for k in range(4):
         app.open_home_page()
-        groups = orm_db.get_group_list()
-        len_before = len(groups)
-        print("")
-        print("КОЛИЧЕСТВО ГРУПП ДО = " + str(len_before))
-        # Уберем из списка группы, куда уже нельзя добавить юзеров.Также группы с пустыми именами, из-за глюка с ними
-        for gr in range(len_before):
-            print("GR = "+str(gr))
-            print("len_before-gr-1 = "+str(len_before-gr-1))
-            print("GROUP NAME CHECKED = " + groups[len_before-gr-1].name)
-            if app.clear(groups[len_before-gr-1].name) == "":
-                print("GROUP NAME CLEARED = " + groups[len_before-gr-1].name)
-                groups.pop(len_before-gr-1)
+        groups = app.group.groups_without_empty_names(orm_db.get_group_list())
+        # Уберем из списка группы, куда уже нельзя добавить юзеров
+        for gr in range(len(groups)):
+            len_before = len(groups)
             if len(orm_db.get_contacts_not_in_group(groups[len_before-gr-1])) == 0:
                 print("GROUP NAME FULL WITH CONNs = " + groups[len_before-gr-1].name)
                 groups.pop(len_before-gr-1)
@@ -29,18 +20,11 @@ def test_add_contact_to_group(app, orm_db):
         if len(groups) == 0:
             app.contact.create(Contact(firstname="t_a_c_t_g User", lastname="t_a_c_t_g User last name",
                                        companyname="t_a_c_t_g user center2m", address="t_a_c_t_g User street, 21"))
-            # если групп совсем нет, добавим группу
-            if len(orm_db.get_group_list) == 0:
+            # если групп с непустыми названиями совсем нет, добавим группу и опять очистим
+            groups = app.group.groups_without_empty_names(orm_db.get_group_list())
+            if len(groups) == 0:
                 app.group.create(Group(name="t_a_c_t_g Group"))
-                groups = orm_db.get_group_list()
-                # придется опять убрать группы с пустыми именами
-                for gr in range(len(groups)):
-                    print("GR = " + str(gr))
-                    print("len_before-gr-1 = " + str(len_before - gr - 1))
-                    print("GROUP NAME CHECKED = " + groups[len_before - gr - 1].name)
-                    if app.clear(groups[len_before - gr - 1].name) == "":
-                        print("GROUP NAME CLEARED = " + groups[len_before - gr - 1].name)
-                        groups.pop(len_before - gr - 1)
+                groups = app.group.groups_without_empty_names(orm_db.get_group_list())
         print("КОЛИЧЕСТВО ГРУПП ПОСЛЕ = " + str(len(groups)))
         # теперь во все группы из groups можно добавить хотя бы одного пользователя, поэтому выберем случайную
         group = random.choice(groups)
