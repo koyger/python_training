@@ -7,9 +7,7 @@ def test_add_group(app, db, json_groups, check_ui):
     group_data = json_groups
     with allure.step('Given a group list'):
         old_groups = db.get_group_list()
-        group_name = group_data.name
-        print("group_name = "+group_name)
-    with allure.step('When I add a group %s to the list'):
+    with allure.step('When I add a group {} to the list'.format(group_data.name)):
         app.group.create(group_data)
         app.group.open_groups_page()
     with allure.step('Then the new group is equal to the old list with the added group'):
