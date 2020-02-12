@@ -15,7 +15,6 @@ def test_add_group(app, db, json_groups, check_ui):
     with allure.step('Then the new group is equal to the old list with the added group'):
         new_groups = db.get_group_list()
         old_groups.append(group_data)
-        # TODO: operator != should be == , != is made only to check different results
         assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
         if check_ui:
             assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
