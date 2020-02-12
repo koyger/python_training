@@ -2,7 +2,8 @@ from model.group import Group
 from timeit import timeit
 
 
-def test_group_list(app, db):
+def get_group_list_time(app, db):
+    # Test made to measure how quickly db.get works
     print("")
     print("FROM UI "+str(timeit(lambda: app.group.get_group_list(), number=1)))
     ui_list = app.group.get_group_list()
